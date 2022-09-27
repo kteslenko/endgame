@@ -1,17 +1,22 @@
 CC = clang
 CFLAGS = -std=c11 -Wall -Wextra -Werror -Wpedantic
-UNAME = $(shell uname)
-LDFLAGS = -Wl,-rpath,resources/SDL/$(UNAME)/lib -Wl,-rpath,resources/SDL_mixer/$(UNAME)/lib
-INC_DIRS = -Iinc -Iresources/SDL/include/SDL2 -Iresources/SDL_mixer/include/SDL2
-LIB_DIRS = -Lresources/SDL/$(UNAME)/lib -Lresources/SDL_mixer/$(UNAME)/lib
-LIBS = -lSDL2 -lSDL2_mixer
-
 OUT = endgame
+UNAME = $(shell uname)
+
+ifeq ($(UNAME), Darwin)
+	FFLAGS = -F resources/frameworks -rpath resources/frameworks \
+		 -framework SDL2 \
+		 -framework SDL2_image \
+		 -framework SDL2_ttf \
+		 -framework SDL2_mixer
+else
+	PKGCONF = $(shell pkg-config sdl2 SDL2_mixer SDL2_image SDL2_ttf --cflags --libs)
+endif
 
 all: $(OUT)
 
 $(OUT): src/*.c
-	$(CC) $(CFLAGS) $(INC_DIRS) $(LIB_DIRS) $(LDFLAGS) $(LIBS) -o $@ $^
+	$(CC) $(CFLAGS) $(PKGCONF) $(FFLAGS) -o $@ $^
 
 uninstall:
 	rm -f $(OUT)
