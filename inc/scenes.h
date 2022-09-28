@@ -2,6 +2,7 @@
 
 #include <stdbool.h>
 
+#include "player.h"
 #include "texture.h"
 
 enum e_scene {
@@ -15,10 +16,15 @@ typedef struct s_scene {
 } t_scene;
 
 typedef struct {
+    SDL_Rect rect;
+    SDL_Texture *texture;
+} t_block;
+
+typedef struct {
     t_scene scene;
-    float time;
-    bool moving;
+    t_block *blocks;
+    t_player *player;
     SDL_Texture *ground;
-} t_game_scene; // Just example scene
+} t_game_scene;
 
 t_game_scene *new_game_scene(SDL_Renderer *renderer);
