@@ -5,8 +5,9 @@ void psdlerror(const char *desc) {
 }
 
 bool init_libs() {
-	return SDL_Init(SDL_INIT_VIDEO) == 0
-		   && IMG_Init(IMG_INIT_PNG) != 0;
+	return SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) == 0
+		   && IMG_Init(IMG_INIT_PNG) != 0
+		   && Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) == 0;
 }
 
 static void createWindow(SDL_Window **window, SDL_Renderer **renderer) { //function that creates window

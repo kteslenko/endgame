@@ -1,5 +1,6 @@
 #pragma once
 
+#include <SDL2/SDL_mixer.h>
 #include "texture.h"
 
 typedef struct {
@@ -7,12 +8,13 @@ typedef struct {
     float y;
     float velocity_x;
     float velocity_y;
-    
+   
     int jumps;
     int max_jumps;
 
     SDL_Rect rect;
     SDL_Texture *texture;
+    Mix_Chunk **jumpEffect;
 } t_player;
 
 t_player *new_player(SDL_Texture *texture);
