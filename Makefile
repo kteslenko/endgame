@@ -1,5 +1,5 @@
 CC = clang
-CFLAGS = -std=c11 -Wall -Wextra -Werror -Wpedantic
+CFLAGS = -std=c11 -Wall -Wextra -Werror -Wpedantic -Iinc -lm
 
 OUT = endgame
 
