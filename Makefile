@@ -1,5 +1,5 @@
 CC = clang
-CFLAGS = -std=c11 -Wall -Wextra -Werror -Wpedantic -Iinc -lm
+CFLAGS = -std=c11 -Wall -Wextra -Werror -Wpedantic -Iinc -lm -g
 OUT = endgame
 UNAME = $(shell uname)
 
