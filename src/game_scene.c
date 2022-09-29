@@ -48,12 +48,12 @@ t_game_scene *new_game_scene(SDL_Renderer *renderer) {
     game_scene->scene.render = render;
     game_scene->ground = loadTexture("resource/images/ground.png", renderer);
     game_scene->blocks = malloc(sizeof(t_block) * 15);
-    SDL_RenderGetViewport(renderer, &game_scene->camera);
-    update_camera(game_scene);
 
     SDL_Texture *player_texture = loadTexture("resource/images/ghost-Sheet.png", renderer);
     
     game_scene->player = new_player(player_texture);
+    SDL_RenderGetViewport(renderer, &game_scene->camera);
+    update_camera(game_scene);
     
     for (int i = 0; i < 10; i++) {
         game_scene->blocks[i].texture = game_scene->ground;
