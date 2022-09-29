@@ -26,4 +26,8 @@ typedef struct {
     SDL_Texture *ground;
 } t_game_scene;
 
+typedef struct {
+    t_scene scene;
+} t_menu_scene;
+
 t_game_scene *new_game_scene(SDL_Renderer *renderer);

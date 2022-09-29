@@ -6,6 +6,7 @@ void handle_player_event(t_player *player, SDL_Event *e) {
             if (player->jumps < player->max_jumps) {
                 player->velocity.y = -750;
                 player->jumps++;
+                Mix_PlayChannel(-1, player->jumpEffect[rand() % 3], 0);
             }
         }
     }
@@ -30,7 +31,10 @@ void update_player(t_player *player, float dt) {
 
 t_player *new_player(SDL_Texture *texture) {
     t_player *player = malloc(sizeof(t_player));
-
+    player->jumpEffect = malloc (sizeof(Mix_Chunk*) * 3);
+    player->jumpEffect[0] = Mix_LoadWAV("resource/sounds/jump1.wav");
+    player->jumpEffect[1] = Mix_LoadWAV("resource/sounds/jump2.wav");
+    player->jumpEffect[2] = Mix_LoadWAV("resource/sounds/jump3.wav");
     player->jumps = 0;
     player->max_jumps = 2;
     player->prev = (SDL_FRect){0, 64, 64, 64};

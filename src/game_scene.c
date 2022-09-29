@@ -33,10 +33,10 @@ t_game_scene *new_game_scene(SDL_Renderer *renderer) {
     game_scene->scene.handle_event = handle_event;
     game_scene->scene.update = update;
     game_scene->scene.render = render;
-    game_scene->ground = loadTexture("resources/images/ground.png", renderer);
+    game_scene->ground = loadTexture("resource/images/ground.png", renderer);
     game_scene->blocks = malloc(sizeof(t_block) * 15);
 
-    SDL_Texture *player_texture = loadTexture("resources/images/ghost-Sheet.png", renderer);
+    SDL_Texture *player_texture = loadTexture("resource/images/ghost-Sheet.png", renderer);
     
     game_scene->player = new_player(player_texture);
     
