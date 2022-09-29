@@ -3,7 +3,6 @@
 #include <stdbool.h>
 
 #include "player.h"
-#include "texture.h"
 
 enum e_scene {
     GAME_SCENE
@@ -16,7 +15,7 @@ typedef struct s_scene {
 } t_scene;
 
 typedef struct {
-    SDL_Rect rect;
+    SDL_FRect rect;
     SDL_Texture *texture;
 } t_block;
 

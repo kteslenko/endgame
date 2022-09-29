@@ -72,9 +72,9 @@ static void render(t_app *app) {
 	}
 }
 
-static float dt(clock_t *last) {
-    clock_t now = clock();
-    float dt = (float)(now - *last) / CLOCKS_PER_SEC;
+static float dt(uint64_t *last) {
+    uint64_t now = SDL_GetTicks64();
+    float dt = (float)(now - *last) / 1000;
 
     *last = now;
     return dt;
@@ -82,7 +82,7 @@ static float dt(clock_t *last) {
 
 void event_loop(t_app *app) {
 	SDL_Event e;
-    clock_t last = clock();
+    uint64_t last = SDL_GetTicks64();
 
 	while (!app->quit) {
 		while (SDL_PollEvent (&e) != 0) {
