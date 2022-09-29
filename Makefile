@@ -4,7 +4,7 @@ OUT = endgame
 UNAME = $(shell uname)
 
 ifeq ($(UNAME), Darwin)
-	FFLAGS = -F resource/frameworks -rpath resources/frameworks \
+	FFLAGS = -F resource/frameworks -rpath resource/frameworks \
 		 -framework SDL2 \
 		 -framework SDL2_image \
 		 -framework SDL2_ttf \
