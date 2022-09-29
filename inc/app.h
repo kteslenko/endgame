@@ -8,7 +8,7 @@
 
 typedef struct {
 	bool quit;
-	t_mus *mus;
+	t_mus mus;
 	t_scene **scenes;
     t_scene *active_scene;
 	SDL_Window *window;

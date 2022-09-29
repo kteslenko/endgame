@@ -6,8 +6,9 @@ bool init_music(t_mus* mus){
 			return false;
 			printf( "SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError() );
                 }
-	mus = malloc(sizeof(t_mus*));
-	mus->m_arr = (Mix_Music*)load_music("resources/music/spirit-blossom-15285.wav");
+	*mus = (t_mus){NULL};
+	mus->m_arr =(
+			Mix_Music*)load_music("resources/music/spirit-blossom-15285.wav");
 	return true;
 }
 Mix_Music* load_music(const char* str){
