@@ -1,61 +1,63 @@
 #include "app.h"
 
 void psdlerror(const char *desc) {
-	fprintf(stderr, "%s: %s\n", desc, SDL_GetError());
+    fprintf(stderr, "%s: %s\n", desc, SDL_GetError());
 }
 
 bool init_libs() {
-	return SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) == 0
-		   && IMG_Init(IMG_INIT_PNG) != 0
-		   && Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) == 0;
+    return SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) == 0
+           && IMG_Init(IMG_INIT_PNG) != 0
+           && Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) == 0;
 }
 
 static void createWindow(SDL_Window **window, SDL_Renderer **renderer) { //function that creates window
-	*window = SDL_CreateWindow("SDL2",
-	SDL_WINDOWPOS_UNDEFINED,
-	SDL_WINDOWPOS_UNDEFINED,
-	1280, 720, 0); //size of the window
+    *window = SDL_CreateWindow("SDL2",
+    SDL_WINDOWPOS_UNDEFINED,
+    SDL_WINDOWPOS_UNDEFINED,
+    1280, 720, 0); //size of the window
 
-	*renderer = SDL_CreateRenderer(*window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    *renderer = SDL_CreateRenderer(*window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 }
 
 static void create_scenes(t_app *app) {
     app->scenes = malloc(sizeof(t_scene*));
     app->scenes[GAME_SCENE] = (t_scene*)new_game_scene(app->renderer);
-	app->active_scene = app->scenes[GAME_SCENE];
+    app->active_scene = app->scenes[GAME_SCENE];
 }
 
 t_app *new_app() {
-	t_app *app = malloc(sizeof(t_app));
+    t_app *app = malloc(sizeof(t_app));
 
-	app->quit = false;
-	createWindow(&app->window, &app->renderer);
-	if (app->window == NULL || app->renderer == NULL) {
-		del_app(app);
-		app = NULL;
-	}
+    app->quit = false;
+    createWindow(&app->window, &app->renderer);
+    if (app->window == NULL || app->renderer == NULL) {
+        del_app(app);
+        app = NULL;
+    }
     create_scenes(app);
+    init_music(&app->mus);
 
-	return app;
+    return app;
 }
 
 void del_app(t_app *app) {
-	if (app == NULL) {
-		return;
-	}
-	if (app->renderer != NULL) {
-		SDL_DestroyRenderer(app->renderer);
-	}
-	if (app->window != NULL) {
-		SDL_DestroyWindow(app->window);
-	}
-	free(app);
+    if (app == NULL) {
+        return;
+    }
+    if (app->renderer != NULL) {
+        SDL_DestroyRenderer(app->renderer);
+    }
+    if (app->window != NULL) {
+        SDL_DestroyWindow(app->window);
+    }
+    del_music(&app->mus);
+    free(app);
 }
 
 static void handle_event(t_app *app, SDL_Event *e) {
-	if (e->type == SDL_QUIT) {
-		app->quit = true;
-	}
+    if (e->type == SDL_QUIT) {
+        app->quit = true;
+    }
     if (app->active_scene != NULL) {
         app->active_scene->handle_event(app->active_scene, e);
     }
@@ -68,9 +70,9 @@ static void update(t_app *app, float dt) {
 }
 
 static void render(t_app *app) {
-	if (app->active_scene != NULL) {
-		app->active_scene->render(app->active_scene, app->renderer);
-	}
+    if (app->active_scene != NULL) {
+        app->active_scene->render(app->active_scene, app->renderer);
+    }
 }
 
 static float dt(uint64_t *last) {
@@ -82,17 +84,18 @@ static float dt(uint64_t *last) {
 }
 
 void event_loop(t_app *app) {
-	SDL_Event e;
+    SDL_Event e;
     uint64_t last = SDL_GetTicks64();
 
-	while (!app->quit) {
-		while (SDL_PollEvent (&e) != 0) {
-			handle_event(app, &e);
-		}
+    while (!app->quit) {
+        while (SDL_PollEvent (&e) != 0) {
+            play_music(&(app->mus));
+            handle_event(app, &e);
+        }
         update(app, dt(&last));
-		
-		SDL_RenderClear(app->renderer);
-		render(app);
+        
+        SDL_RenderClear(app->renderer);
+        render(app);
         SDL_RenderPresent(app->renderer);
-	}
+    }
 }

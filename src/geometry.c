@@ -1,19 +1,19 @@
 #include "geometry.h"
 
 SDL_FPoint top_left(SDL_FRect *rect) {
-	return (SDL_FPoint){rect->x, rect->y};
+    return (SDL_FPoint){rect->x, rect->y};
 }
 
 SDL_FPoint top_right(SDL_FRect *rect) {
-	return (SDL_FPoint){rect->x + rect->w, rect->y};
+    return (SDL_FPoint){rect->x + rect->w, rect->y};
 }
 
 SDL_FPoint bottom_left(SDL_FRect *rect) {
-	return (SDL_FPoint){rect->x, rect->y + rect->h};
+    return (SDL_FPoint){rect->x, rect->y + rect->h};
 }
 
 SDL_FPoint bottom_right(SDL_FRect *rect) {
-	return (SDL_FPoint){rect->x + rect->w, rect->y + rect->h};
+    return (SDL_FPoint){rect->x + rect->w, rect->y + rect->h};
 }
 
 SDL_Rect frect_to_rect(SDL_FRect *rect) {
