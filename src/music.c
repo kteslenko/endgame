@@ -2,7 +2,7 @@
 
 bool init_music(t_mus *mus) {
     *mus = (t_mus){NULL};
-    mus->m_arr = (Mix_Music *)load_music("resource/music/spirit-blossom-15285.wav");
+    mus->m_arr = (Mix_Music *)load_music("resource/music/song.mp3");
     return true;
 }
 
