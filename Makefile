@@ -10,14 +10,13 @@ ifeq ($(UNAME), Darwin)
 		 -framework SDL2_ttf \
 		 -framework SDL2_mixer
 else
-	LDFLAGS = -Iresource/SDL2/include -Lresource/SDL2/lib -Wl,-rpath,resource/SDL2/lib
-	PKGCONF = $(shell pkg-config SDL2_mixer SDL2_image SDL2_ttf --cflags-only-other --libs)
+	PKGCONF = $(shell pkg-config sdl2 SDL2_mixer SDL2_image SDL2_ttf --cflags --libs)
 endif
 
 all: $(OUT)
 
 $(OUT): src/*.c
-	$(CC) $(CFLAGS) $(LDFLAGS) $(PKGCONF) $(FFLAGS) -o $@ $^
+	$(CC) $(CFLAGS) $(PKGCONF) $(FFLAGS) -o $@ $^
 
 uninstall:
 	rm -f $(OUT)

@@ -52,38 +52,42 @@ void render_player(t_player *player, SDL_Renderer *renderer) {
 }
 
 void handle_intersect(t_player *player, SDL_FRect *rect) {
-    SDL_FPoint prev[] = {
-        top_left(&player->prev),
-        top_right(&player->prev),
-        bottom_left(&player->prev),
-        bottom_right(&player->prev),
+    SDL_Rect iprev = frect_to_rect(&player->prev);
+    SDL_Rect iplayer = frect_to_rect(&player->rect);
+    SDL_Rect irect = frect_to_rect(rect);
+
+    SDL_Point prev[] = {
+        top_left(&iprev),
+        top_right(&iprev),
+        bottom_left(&iprev),
+        bottom_right(&iprev),
     };
-    SDL_FPoint corners[] = {
-        top_left(&player->rect),
-        top_right(&player->rect),
-        bottom_left(&player->rect),
-        bottom_right(&player->rect),
+    SDL_Point corners[] = {
+        top_left(&iplayer),
+        top_right(&iplayer),
+        bottom_left(&iplayer),
+        bottom_right(&iplayer),
     };
     
     for (int i = 0; i < 4; i++) {
-        SDL_FPoint inter = {prev[i].x, prev[i].y};
-        if (!SDL_IntersectFRectAndLine(rect, &inter.x, &inter.y, &corners[i].x, &corners[i].y)) {
+        SDL_Point inter = {prev[i].x, prev[i].y};
+        if (!SDL_IntersectRectAndLine(&irect, &inter.x, &inter.y, &corners[i].x, &corners[i].y)) {
             continue;
         }
-        if ((approx_eq(inter.x, rect->x)) && (i == 1 || i == 3)) {
+        if (inter.x == rect->x && (i == 1 || i == 3)) {
             player->rect.x = rect->x - player->rect.w;
             player->velocity.x = 0;
         }
-        if ((approx_eq(inter.x, rect->x + rect->w)) && (i == 0 || i == 2)) {
+        if (inter.x == rect->x + rect->w - 1 && (i == 0 || i == 2)) {
             player->rect.x = rect->x + rect->w;
             player->velocity.x = 0;
         }
-        if (approx_eq(inter.y, rect->y) && (i == 2 || i == 3)) {
+        if (inter.y == rect->y && (i == 2 || i == 3)) {
             player->rect.y = rect->y - player->rect.h;
             player->jumps = 0;
             player->velocity.y = 0;
         }
-        if (approx_eq(inter.y, rect->y + rect->h) && (i == 0 || i == 1)) {
+        if (inter.y == rect->y + rect->h - 1 && (i == 0 || i == 1)) {
             player->rect.y = rect->y + rect->h;
             player->velocity.y = 0;
         }
