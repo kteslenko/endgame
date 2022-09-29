@@ -7,8 +7,7 @@ bool init_music(t_mus* mus){
 			printf( "SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError() );
                 }
 	*mus = (t_mus){NULL};
-	mus->m_arr =(
-			Mix_Music*)load_music("resources/music/spirit-blossom-15285.wav");
+	mus->m_arr =(Mix_Music*)load_music("resources/music/spirit-blossom-15285.wav");
 	return true;
 }
 Mix_Music* load_music(const char* str){

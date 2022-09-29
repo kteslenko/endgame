@@ -35,7 +35,7 @@ t_app *new_app() {
 	}
     create_scenes(app);
 	
-    init_music(app->mus);
+    init_music(&app->mus);
 
 	return app;
 }
@@ -50,7 +50,7 @@ void del_app(t_app *app) {
 	if (app->window != NULL) {
 		SDL_DestroyWindow(app->window);
 	}
-	del_music(app->mus);
+	del_music(&app->mus);
 	free(app);
 }
 
@@ -88,7 +88,7 @@ void event_loop(t_app *app) {
     clock_t last = clock();
 	while (!app->quit) {
 		while (SDL_PollEvent (&e) != 0) {
-			play_music((app->mus));
+			play_music(&(app->mus));
 			handle_event(app, &e);
 		}
         update(app, dt(&last));
