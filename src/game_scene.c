@@ -28,9 +28,25 @@ static void update(t_scene *scene, float dt) {
     update_camera(game_scene);
 }
 
+static void render_sky(t_game_scene *game_scene, SDL_Renderer *renderer) {
+    float scale;
+    int w;
+    int h;
+
+    SDL_QueryTexture(game_scene->sky, NULL, NULL, &w, &h);
+    scale = (float)game_scene->camera.h / h;
+
+    SDL_Rect dst = {0, 0, w * scale, h * scale};
+    while (dst.x < game_scene->camera.w) {
+        SDL_RenderCopy(renderer, game_scene->sky, NULL, &dst);
+        dst.x += dst.w;
+    }
+}
+
 static void render(t_scene *scene, SDL_Renderer *renderer) {
     t_game_scene *game_scene = (t_game_scene*)scene;
-    
+
+    render_sky(game_scene, renderer);
     for (int i = 0; i < 15; i++) {
         SDL_Rect dst = frect_to_rect(&game_scene->blocks[i].rect);
         dst.x -= game_scene->camera.x;
@@ -46,24 +62,25 @@ t_game_scene *new_game_scene(SDL_Renderer *renderer) {
     game_scene->scene.handle_event = handle_event;
     game_scene->scene.update = update;
     game_scene->scene.render = render;
-    game_scene->ground = loadTexture("resource/images/ground.png", renderer);
+    game_scene->sky = loadTexture("resource/images/sky.png", renderer);
     game_scene->blocks = malloc(sizeof(t_block) * 15);
 
     SDL_Texture *player_texture = loadTexture("resource/images/ghost-Sheet.png", renderer);
+    SDL_Texture *ground_texture = loadTexture("resource/images/ground.png", renderer);
     
     game_scene->player = new_player(player_texture);
     SDL_RenderGetViewport(renderer, &game_scene->camera);
     update_camera(game_scene);
     
     for (int i = 0; i < 10; i++) {
-        game_scene->blocks[i].texture = game_scene->ground;
+        game_scene->blocks[i].texture = ground_texture;
         game_scene->blocks[i].rect.x = i * 64.0f;
         game_scene->blocks[i].rect.y = 656.0f;
         game_scene->blocks[i].rect.w = 64.0f;
         game_scene->blocks[i].rect.h = 64.0f;
     }
     for (int i = 10; i < 15; i++) {
-        game_scene->blocks[i].texture = game_scene->ground;
+        game_scene->blocks[i].texture = ground_texture;
         game_scene->blocks[i].rect.x = (i - 5) * 64.0f;
         game_scene->blocks[i].rect.y = 292.0f;
         game_scene->blocks[i].rect.w = 64.0f;
