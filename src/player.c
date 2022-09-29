@@ -45,9 +45,11 @@ t_player *new_player(SDL_Texture *texture) {
     return player;
 }
 
-void render_player(t_player *player, SDL_Renderer *renderer) {
+void render_player(t_player *player, SDL_Renderer *renderer, SDL_Rect *camera) {
     SDL_Rect src = {0, 0, 32, 32};
     SDL_Rect dst = frect_to_rect(&player->rect);
+    dst.x -= camera->x;
+    dst.y -= camera->y;
     SDL_RenderCopy(renderer, player->texture, &src, &dst);
 }
 

@@ -17,5 +17,5 @@ typedef struct {
 t_player *new_player(SDL_Texture *texture);
 void handle_player_event(t_player *player, SDL_Event *e);
 void update_player(t_player *player, float dt);
-void render_player(t_player *player, SDL_Renderer *renderer);
+void render_player(t_player *player, SDL_Renderer *renderer, SDL_Rect *camera);
 void handle_intersect(t_player *player, SDL_FRect *rect);

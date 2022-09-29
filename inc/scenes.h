@@ -23,6 +23,7 @@ typedef struct {
     t_scene scene;
     t_block *blocks;
     t_player *player;
+    SDL_Rect camera;
     SDL_Texture *ground;
 } t_game_scene;
 
