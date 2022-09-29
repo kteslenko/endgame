@@ -75,8 +75,8 @@ static void render(t_app *app) {
     }
 }
 
-static float dt(uint64_t *last) {
-    uint64_t now = SDL_GetTicks64();
+static float dt(uint32_t *last) {
+    uint32_t now = SDL_GetTicks();
     float dt = (float)(now - *last) / 1000;
 
     *last = now;
@@ -85,7 +85,7 @@ static float dt(uint64_t *last) {
 
 void event_loop(t_app *app) {
     SDL_Event e;
-    uint64_t last = SDL_GetTicks64();
+    uint32_t last = SDL_GetTicks();
 
     while (!app->quit) {
         while (SDL_PollEvent (&e) != 0) {

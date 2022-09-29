@@ -33,7 +33,7 @@ SDL_Point bottom_right(SDL_Rect *rect) {
 }
 
 SDL_Rect frect_to_rect(SDL_FRect *rect) {
-    return (SDL_Rect){SDL_roundf(rect->x), SDL_roundf(rect->y), SDL_roundf(rect->w), SDL_roundf(rect->h)};
+    return (SDL_Rect){roundf(rect->x), roundf(rect->y), roundf(rect->w), roundf(rect->h)};
 }
 
 SDL_FRect rect_to_frect(SDL_Rect *rect) {

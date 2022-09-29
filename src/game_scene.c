@@ -10,8 +10,9 @@ static void update(t_scene *scene, float dt) {
 
     update_player(game_scene->player, dt);
     for (int i = 0; i < 15; i++) {
-        if (SDL_HasIntersectionF(&game_scene->blocks[i].rect,
-                                &game_scene->player->rect)) {
+    	SDL_Rect player = frect_to_rect(&game_scene->player->rect);
+    	SDL_Rect block = frect_to_rect(&game_scene->blocks[i].rect);
+        if (SDL_HasIntersection(&player, &block)) {
             handle_intersect(game_scene->player, &game_scene->blocks[i].rect);
         }
     }
