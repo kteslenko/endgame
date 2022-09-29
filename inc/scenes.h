@@ -30,6 +30,7 @@ typedef struct {
 
     SDL_Rect camera;
     SDL_Texture *ground;
+    TTF_Font* font;
 } t_game_scene;
 
 typedef struct {

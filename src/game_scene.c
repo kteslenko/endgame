@@ -40,21 +40,16 @@ static void update(t_scene *scene, float dt) {
 }
 
 static void render_text(t_game_scene *game_scene, SDL_Renderer *renderer) {
-    TTF_Init();
-    TTF_Font* PixelMiddle = TTF_OpenFont("resource/text/PixelMiddle.ttf", 24);
     char count_score[30] = "SCORE: ";
     SDL_itoa(game_scene->score, count_score + 7, 10);
 
-    SDL_Color White = {255, 255, 255, 255};
-    SDL_Surface* surface_text = TTF_RenderText_Solid(PixelMiddle, count_score, White);
+    SDL_Color color = {255, 255, 255, 255};
+    SDL_Surface* surface_text = TTF_RenderText_Solid(game_scene->font, count_score, color);
     
     SDL_Texture* text = SDL_CreateTextureFromSurface(renderer, surface_text);
 
-    SDL_Rect text_rect; 
-    text_rect.x = 0;  
-    text_rect.y = 0; 
-    text_rect.w = 80; 
-    text_rect.h = 80;
+    SDL_Rect text_rect = {20, 12, 0, 0};
+    SDL_QueryTexture(text, NULL, NULL, &text_rect.w, &text_rect.h);
     SDL_RenderCopy(renderer, text, NULL, &text_rect);
 
     SDL_FreeSurface(surface_text);
@@ -92,6 +87,7 @@ t_game_scene *new_game_scene(SDL_Renderer *renderer) {
     game_scene->ground = loadTexture("resource/images/ground.png", renderer);
     game_scene->blocks = malloc(sizeof(t_block) * 15);
     game_scene->score = 0;
+    game_scene->font = TTF_OpenFont("resource/text/PixelMiddle.ttf", 48);
     SDL_Texture *coin_texture = loadTexture("resource/images/coin.png", renderer);
     SDL_Texture *player_texture = loadTexture("resource/images/ghost-Sheet.png", renderer);
 
