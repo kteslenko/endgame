@@ -1,6 +1,7 @@
 #pragma once
 
 #include <stdbool.h>
+#include <SDL2/SDL_ttf.h>
 
 #include "player.h"
 
@@ -23,8 +24,13 @@ typedef struct {
     t_scene scene;
     t_block *blocks;
     t_player *player;
+
+    t_block *coins[19];
+    int score;
+
     SDL_Rect camera;
     SDL_Texture *sky;
+    TTF_Font* font;
 } t_game_scene;
 
 typedef struct {
@@ -32,3 +38,4 @@ typedef struct {
 } t_menu_scene;
 
 t_game_scene *new_game_scene(SDL_Renderer *renderer);
+
