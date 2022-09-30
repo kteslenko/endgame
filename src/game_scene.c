@@ -64,11 +64,11 @@ static void render_sky(t_renderer *renderer) {
 }
 
 static void render_scene_text(t_game_scene *game_scene, t_renderer *renderer) {
-    char count_score[30] = "SCORE: ";
+    char count_score[100];
     SDL_Point pos = {20, 12};
     SDL_Color color = {0, 0, 0, 255};
 
-    SDL_itoa(game_scene->score, count_score + 7, 10);
+    sprintf(count_score, "SCORE: %d/%d", game_scene->score, 97);
     render_text(renderer, count_score, game_scene->font, pos, color);
 }
 
