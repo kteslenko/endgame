@@ -44,3 +44,7 @@ typedef struct {
 
 t_game_scene *new_game_scene(t_renderer *renderer, uint32_t event_number);
 t_menu_scene *new_menu_scene(t_renderer *renderer, uint32_t event_number);
+t_menu_scene *losing_menu_scene(t_renderer *renderer, uint32_t event_number);
+t_menu_scene *win_menu_scene(t_renderer *renderer, uint32_t event_number);
+
+
