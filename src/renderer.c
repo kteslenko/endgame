@@ -1,7 +1,7 @@
 #include "renderer.h"
 
 void load_textures(t_renderer *renderer) {
-    renderer->textures = malloc(sizeof(SDL_Texture*) * 10);
+    renderer->textures = malloc(sizeof(SDL_Texture*) * 11);
 
     renderer->textures[GROUND] = loadTexture("resource/images/ground.png", renderer->renderer);
     renderer->textures[DIRT] = loadTexture("resource/images/dirt.png", renderer->renderer);
@@ -13,6 +13,7 @@ void load_textures(t_renderer *renderer) {
     renderer->textures[BENCH] = loadTexture("resource/images/bench.png", renderer->renderer);
     renderer->textures[LOGS] = loadTexture("resource/images/logs.png", renderer->renderer);
     renderer->textures[POOL] = loadTexture("resource/images/pool.png", renderer->renderer);
+    renderer->textures[COIN] = loadTexture("resource/images/coin2_20x20.png", renderer->renderer);
 }
 
 void render_clear(t_renderer *renderer) {

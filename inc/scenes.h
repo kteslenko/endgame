@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include <SDL2/SDL_ttf.h>
 
+#include "animation.h"
 #include "player.h"
 #include "map.h"
 
@@ -22,6 +23,7 @@ typedef struct {
     t_player *player;
 
     t_block *coins[19];
+    t_animation *coin_animation;
     int score;
 
     SDL_Texture *sky;

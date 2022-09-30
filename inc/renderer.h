@@ -18,6 +18,7 @@ enum e_texture {
     BENCH,
     LOGS,
     POOL,
+    COIN,
 };
 
 typedef struct {
