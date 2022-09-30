@@ -27,7 +27,6 @@ typedef struct {
     t_map *map;
     t_player *player;
 
-    t_block *coins[19];
     t_animation *coin_animation;
     int score;
 

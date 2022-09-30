@@ -1,12 +1,26 @@
 #include "map.h"
 
-t_map *new_map(int max_blocks) {
+t_map *new_map(int max_blocks, int coins_count) {
     t_map *map = malloc(sizeof(t_map));
 
     map->blocks = malloc(sizeof(t_block) * max_blocks);
     map->size = 0;
+	map->coins = malloc(sizeof(SDL_Rect) * coins_count);
+	map->coins_count = coins_count;
 
     return map;
+}
+
+int count_coins(t_map *map) {
+	int count = 0;
+	
+	for (int i = 0; i < map->coins_count; i++) {
+		if (!map->coins[i].collected) {
+			count++;
+		}
+	}
+
+	return count;
 }
 
 void push_block(t_map *map, t_block block) {
@@ -28,8 +42,20 @@ void build_block(t_map *map, SDL_Texture *texture, float x, float y, float w, fl
     push_block(map, block);
 }
 
+static void add_coins(t_map *map) {
+	for (int i = 0; i < map->coins_count; i++) {
+		map->coins[i].collected = false;
+        map->coins[i].rect.x = i * 20.0f;
+        map->coins[i].rect.y = 256.0f;
+        map->coins[i].rect.w = 20.0f;
+        map->coins[i].rect.h = 20.0f;
+    }
+}
+
 t_map *build_level(SDL_Texture **textures) {
-    t_map *map = new_map(1000);
+    t_map *map = new_map(1000, 10);
+
+	add_coins(map);
 
 	build_block(map, textures[FIRE], 130, 470, 64, 30);
 

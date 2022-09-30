@@ -1,5 +1,14 @@
 #include "scenes.h"
 
+static void push_switch_event(t_scene *scene, enum e_scene type) {
+    SDL_Event event;
+
+    SDL_zero(event);
+    event.type = scene->event_number + ACTIVE_SCENE_CHANGED;
+    event.user.code = type;
+    SDL_PushEvent(&event);
+}
+
 static void handle_event(t_scene *scene, SDL_Event *e) {
     t_game_scene *game_scene = (t_game_scene*)scene;
     handle_player_event(game_scene->player, e);
@@ -19,18 +28,21 @@ static void update(t_scene *scene, float dt) {
             handle_intersect(game_scene->player, &game_scene->map->blocks[i].rect);
         }
     }
-    for (int i = 0; i < 19; i++) {
-        if (game_scene->coins[i] != NULL) {
+    for (int i = 0; i < game_scene->map->coins_count; i++) {
+        if (!game_scene->map->coins[i].collected) {
             SDL_Rect player = frect_to_rect(&game_scene->player->rect);
-            SDL_Rect coin = frect_to_rect(&game_scene->coins[i]->rect);
+            SDL_Rect coin = frect_to_rect(&game_scene->map->coins[i].rect);
             if (SDL_HasIntersection(&player, &coin)) {
                 game_scene->score++;
-                free(game_scene->coins[i]);
-                game_scene->coins[i] = NULL;
+                game_scene->map->coins[i].collected = true;
             }
         }
     }
     update_animation(game_scene->coin_animation, dt);
+
+    if (count_coins(game_scene->map) == 0) {
+        push_switch_event(scene, WIN_MENU_SCENE);
+    }
 }
 
 static void render_sky(t_renderer *renderer) {
@@ -66,15 +78,6 @@ static void move_camera(t_game_scene *scene, t_renderer *renderer) {
     }
 }
 
-static void push_switch_event(t_scene *scene, enum e_scene type) {
-    SDL_Event event;
-
-    SDL_zero(event);
-    event.type = scene->event_number + ACTIVE_SCENE_CHANGED;
-    event.user.code = type;
-    SDL_PushEvent(&event);
-}
-
 static void render(t_scene *scene, t_renderer *renderer) {
     t_game_scene *game_scene = (t_game_scene*)scene;
     SDL_Rect player = frect_to_rect(&game_scene->player->rect);
@@ -90,9 +93,9 @@ static void render(t_scene *scene, t_renderer *renderer) {
     for (int i = 0; i < game_scene->map->size; i++) {
         render_texturef(renderer, game_scene->map->blocks[i].texture, NULL, &game_scene->map->blocks[i].rect);
     }
-    for (int i = 0; i < 19; i++) {
-        if (game_scene->coins[i] != NULL) {
-            render_animation(game_scene->coin_animation, renderer, &game_scene->coins[i]->rect);
+    for (int i = 0; i < game_scene->map->coins_count; i++) {
+        if (!game_scene->map->coins[i].collected) {
+            render_animation(game_scene->coin_animation, renderer, &game_scene->map->coins[i].rect);
         }
     }
     render_player(game_scene->player, renderer);
@@ -113,15 +116,6 @@ t_game_scene *new_game_scene(t_renderer *renderer, uint32_t event_number) {
     game_scene->font = TTF_OpenFont("resource/text/PixelMiddle.ttf", 48);
     game_scene->coin_animation = coin_animation(renderer);
     game_scene->player = new_player(renderer);
-    
-    for (int i = 0; i < 19; i++) {
-        game_scene->coins[i] = malloc(sizeof(t_block));
-        game_scene->coins[i]->texture = NULL;
-        game_scene->coins[i]->collider = true;
-        game_scene->coins[i]->rect.x = i * 20.0f;
-        game_scene->coins[i]->rect.y = 256.0f;
-        game_scene->coins[i]->rect.w = 20.0f;
-        game_scene->coins[i]->rect.h = 20.0f;
-    }
+
     return game_scene;
 }
