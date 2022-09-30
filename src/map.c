@@ -83,5 +83,38 @@ t_map *build_level(SDL_Texture **textures) {
 	build_block(map, textures[POOL], 4494, 470, 89, 93);
 	build_platform(map, textures[GROUND], 3704, 564, 20);
 
+	build_platform(map, textures[GROUND], 5048, 564, 1);
+	build_platform(map, textures[GROUND], 5176, 564, 1);
+	build_platform(map, textures[GROUND], 5368, 564, 1);
+	build_platform(map, textures[GROUND], 5496, 308, 1);
+	build_platform(map, textures[GROUND], 5624, 180, 1);
+	build_platform(map, textures[GROUND], 5880, 180, 1);
+	build_platform(map, textures[GROUND], 6072, 180, 4);
+	build_platform(map, textures[GROUND], 5624, 564, 1);
+	build_platform(map, textures[GROUND], 5752, 628, 3);
+	build_platform(map, textures[GROUND], 6200, 564, 2); //top 6392 180 //bottom 6392 564
+
+	build_platform(map, textures[GROUND], 6392, 180, 3);
+	build_platform(map, textures[GROUND], 6712, 244, 2);
+	build_platform(map, textures[GROUND], 6956, 116, 2);
+	build_platform(map, textures[GROUND], 7212, 116, 1);
+	build_platform(map, textures[GROUND], 7404, 244, 1);
+	build_platform(map, textures[GROUND], 7596, 116, 1);
+	build_platform(map, textures[GROUND], 6392, 564, 1);
+	build_platform(map, textures[GROUND], 6520, 628, 3);
+	build_platform(map, textures[GROUND], 6776, 628, 3);
+	build_platform(map, textures[GROUND], 7096, 564, 2);
+	build_platform(map, textures[GROUND], 7480, 564, 3); //top 7736 116 bottom 7736 564
+
+	build_platform(map, textures[GROUND], 7736, 116, 2);
+	build_platform(map, textures[GROUND], 8056, 180, 2);
+	build_platform(map, textures[GROUND], 8568, 180, 1);
+	build_platform(map, textures[GROUND], 8824, 180, 1);	
+	build_platform(map, textures[GROUND], 7736, 564, 1);
+	build_platform(map, textures[GROUND], 7928, 564, 1);
+	build_platform(map, textures[GROUND], 8120, 564, 5);
+	build_platform(map, textures[GROUND], 8568, 500, 5);
+	build_platform(map, textures[GROUND], 8952, 500, 1);
+
     return map;
 }
