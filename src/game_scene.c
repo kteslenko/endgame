@@ -33,16 +33,16 @@ static void update(t_scene *scene, float dt) {
     update_animation(game_scene->coin_animation, dt);
 }
 
-static void render_sky(t_game_scene *game_scene, t_renderer *renderer) {
+static void render_sky(t_renderer *renderer) {
     SDL_Rect dst = {0, 0, 0, 0};
 
-    SDL_QueryTexture(game_scene->sky, NULL, NULL, &dst.w, &dst.h);
+    SDL_QueryTexture(renderer->textures[SKY], NULL, NULL, &dst.w, &dst.h);
     dst.w *= (float)renderer->camera.h / dst.h;
     dst.h = renderer->camera.h;
 
     mode_screen(renderer);
     while (dst.x < renderer->camera.w) {
-        render_texture(renderer, game_scene->sky, NULL, &dst);
+        render_texture(renderer, renderer->textures[SKY], NULL, &dst);
         dst.x += dst.w;
     }
 }
@@ -84,7 +84,7 @@ static void render(t_scene *scene, t_renderer *renderer) {
         push_switch_event(scene, LOSING_MENU_SCENE);
     }
 
-    render_sky(game_scene, renderer);
+    render_sky(renderer);
 
     mode_camera(renderer);
     for (int i = 0; i < game_scene->map->size; i++) {
@@ -108,7 +108,6 @@ t_game_scene *new_game_scene(t_renderer *renderer, uint32_t event_number) {
     game_scene->scene.handle_event = handle_event;
     game_scene->scene.update = update;
     game_scene->scene.render = render;
-    game_scene->sky = loadTexture("resource/images/sky.png", renderer->renderer);
     game_scene->map = build_level(renderer->textures);
     game_scene->score = 0;
     game_scene->font = TTF_OpenFont("resource/text/PixelMiddle.ttf", 48);

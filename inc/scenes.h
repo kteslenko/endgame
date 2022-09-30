@@ -31,7 +31,6 @@ typedef struct {
     t_animation *coin_animation;
     int score;
 
-    SDL_Texture *sky;
     TTF_Font* font;
 } t_game_scene;
 

@@ -24,7 +24,8 @@ enum e_texture {
     WALK,
     BACKGROUND,
     BUTTON_PLAY,
-    BUTTON_EXIT
+    BUTTON_EXIT,
+    SKY,
 };
 
 typedef struct {
