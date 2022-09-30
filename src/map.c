@@ -15,7 +15,7 @@ void push_block(t_map *map, t_block block) {
 }
 
 void build_platform(t_map *map, SDL_Texture *texture, float x, float y, int len) {
-    t_block block = {{x, y, 64, 64}, texture};
+    t_block block = {true, {x, y, 64, 64}, texture};
 
     for (int i = 1; i <= len; i++) {
         push_block(map, block);
@@ -24,7 +24,7 @@ void build_platform(t_map *map, SDL_Texture *texture, float x, float y, int len)
 }
 
 void build_block(t_map *map, SDL_Texture *texture, float x, float y, float w, float h) {
-    t_block block = {{x, y, w, h}, texture};
+    t_block block = {false, {x, y, w, h}, texture};
     push_block(map, block);
 }
 

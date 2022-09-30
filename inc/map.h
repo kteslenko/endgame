@@ -3,6 +3,7 @@
 #include "renderer.h"
 
 typedef struct {
+    bool collider;
     SDL_FRect rect;
     SDL_Texture *texture;
 } t_block;

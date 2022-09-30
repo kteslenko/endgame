@@ -10,6 +10,9 @@ static void update(t_scene *scene, float dt) {
 
     update_player(game_scene->player, dt);
     for (int i = 0; i < game_scene->map->size; i++) {
+        if (!game_scene->map->blocks[i].collider) {
+            continue;
+        }
     	SDL_Rect player = frect_to_rect(&game_scene->player->rect);
     	SDL_Rect block = frect_to_rect(&game_scene->map->blocks[i].rect);
         if (SDL_HasIntersection(&player, &block)) {
@@ -97,6 +100,7 @@ t_game_scene *new_game_scene(t_renderer *renderer) {
     for (int i = 0; i < 19; i++) {
         game_scene->coins[i] = malloc(sizeof(t_block));
         game_scene->coins[i]->texture = coin_texture;
+        game_scene->coins[i]->collider = true;
         game_scene->coins[i]->rect.x = i * 64.0f;
         game_scene->coins[i]->rect.y = 600.0f;
         game_scene->coins[i]->rect.w = 64.0f;
