@@ -38,12 +38,10 @@ static void render(t_scene *scene, t_renderer *renderer) {
     mode_screen(renderer);
     render_texture(renderer, renderer->textures[BACKGROUND], NULL, &renderer->screen);
 
-    TTF_Font *name_font = TTF_OpenFont("resource/text/PixelMiddle.ttf", 150);
-
-    SDL_Rect text_size = text_rect(renderer, "Medieval Cringe", name_font);
+    SDL_Rect text_size = text_rect(renderer, "Medieval Cringe", menu_scene->name_font);
 
     text_pos = (SDL_Point){center.x - text_size.w / 2, center.y - text_size.h / 2 - 100}; 
-    render_text(renderer, "Medieval Cringe", name_font, text_pos, name_text_color);
+    render_text(renderer, "Medieval Cringe", menu_scene->name_font, text_pos, name_text_color);
 
     menu_scene->start_game.rect.x = 100;
     menu_scene->start_game.rect.y = renderer->screen.h - menu_scene->start_game.rect.h - 100;
@@ -66,9 +64,11 @@ t_menu_scene *new_menu_scene(t_renderer *renderer, uint32_t event_number) {
     menu_scene->scene.handle_event = handle_event;
     menu_scene->scene.update = update;
     menu_scene->scene.render = render;
-    menu_scene->font = TTF_OpenFont("resource/text/PixelMiddle.ttf", 64);
     menu_scene->start_game = (t_block){true, {0, 0, 256, 88}, renderer->textures[BUTTON_PLAY]};
     menu_scene->exit_game = (t_block){true, {0, 0, 256, 88}, renderer->textures[BUTTON_EXIT]};
+    
+    menu_scene->font = TTF_OpenFont("resource/text/PixelMiddle.ttf", 64);
+    menu_scene->name_font = TTF_OpenFont("resource/text/PixelMiddle.ttf", 150);
 
     return menu_scene;
 }

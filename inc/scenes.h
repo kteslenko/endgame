@@ -40,6 +40,7 @@ typedef struct {
     t_block exit_game;
 
     TTF_Font* font;
+    TTF_Font *name_font;
 } t_menu_scene;
 
 t_game_scene *new_game_scene(t_renderer *renderer, uint32_t event_number);
