@@ -17,7 +17,7 @@ static void createWindow(SDL_Window **window, t_renderer **renderer) { //functio
     SDL_WINDOWPOS_UNDEFINED,
     1280, 720, SDL_WINDOW_RESIZABLE); //size of the window
 
-    *renderer = malloc(sizeof(renderer));
+    *renderer = malloc(sizeof(t_renderer));
     (*renderer)->renderer = SDL_CreateRenderer(*window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     (*renderer)->screen = (SDL_Rect){0, 0, 1280, 720};
     (*renderer)->camera = (SDL_Rect){0, 0, 1280, 720};
