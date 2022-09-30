@@ -41,7 +41,6 @@ t_map *build_level(SDL_Texture **textures) {
 	build_block(map, textures[TREE1], 920, 305, 120, 134);
 
 	build_platform(map, textures[GROUND], 700, 436, 9);
-	build_platform(map, textures[DIRT], 1148, 308, 2);
 	build_platform(map, textures[DIRT], 1148, 244, 2);
 	build_platform(map, textures[DIRT], 1148, 180, 2);
 	build_platform(map, textures[GROUND], 1020, 116, 4);
@@ -134,6 +133,8 @@ t_map *build_level(SDL_Texture **textures) {
 	build_platform(map, textures[DIRT], 9336, 116, 11);
 	build_platform(map, textures[DIRT], 9336, 52, 11);
 	build_platform(map, textures[DIRT], 9336, -12, 11);
+	build_platform(map, textures[DIRT], 9336, -76, 11);
+	build_platform(map, textures[GROUND], 9336, -140, 11);
 	build_platform(map, textures[DIRT], 9720, 308, 5); 
 	build_platform(map, textures[DIRT], 9720, 244, 5); 
 	build_platform(map, textures[DIRT], 10040, -12, 4); 
@@ -162,7 +163,7 @@ t_map *build_level(SDL_Texture **textures) {
 	build_platform(map, textures[DIRT], 11256, 180, 5); 
 	build_platform(map, textures[DIRT], 11256, 244, 5); 
 	build_platform(map, textures[DIRT], 11256, 308, 5); 
-	build_platform(map, textures[GROUND], 11576, 308, 1); 
+	
 
 
     return map;
