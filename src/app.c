@@ -11,13 +11,17 @@ bool init_libs() {
            && TTF_Init() == 0;
 }
 
-static void createWindow(SDL_Window **window, SDL_Renderer **renderer) { //function that creates window
+static void createWindow(SDL_Window **window, t_renderer **renderer) { //function that creates window
     *window = SDL_CreateWindow("SDL2",
     SDL_WINDOWPOS_UNDEFINED,
     SDL_WINDOWPOS_UNDEFINED,
     1280, 720, SDL_WINDOW_RESIZABLE); //size of the window
 
-    *renderer = SDL_CreateRenderer(*window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    *renderer = malloc(sizeof(renderer));
+    (*renderer)->renderer = SDL_CreateRenderer(*window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    (*renderer)->screen = (SDL_Rect){0, 0, 1280, 720};
+    (*renderer)->camera = (SDL_Rect){0, 0, 1280, 720};
+    (*renderer)->active = &(*renderer)->screen;
 }
 
 static void create_scenes(t_app *app) {
@@ -46,7 +50,8 @@ void del_app(t_app *app) {
         return;
     }
     if (app->renderer != NULL) {
-        SDL_DestroyRenderer(app->renderer);
+        SDL_DestroyRenderer(app->renderer->renderer);
+        free(app->renderer);
     }
     if (app->window != NULL) {
         SDL_DestroyWindow(app->window);
@@ -58,6 +63,10 @@ void del_app(t_app *app) {
 static void handle_event(t_app *app, SDL_Event *e) {
     if (e->type == SDL_QUIT) {
         app->quit = true;
+    }
+    if (e->type == SDL_WINDOWEVENT && e->window.event == SDL_WINDOWEVENT_RESIZED) {
+        app->renderer->screen.w = e->window.data1;
+        app->renderer->screen.h = e->window.data2;
     }
     if (app->active_scene != NULL) {
         app->active_scene->handle_event(app->active_scene, e);
@@ -95,8 +104,8 @@ void event_loop(t_app *app) {
         }
         update(app, dt(&last));
         
-        SDL_RenderClear(app->renderer);
+        render_clear(app->renderer);
         render(app);
-        SDL_RenderPresent(app->renderer);
+        render_present(app->renderer);
     }
 }

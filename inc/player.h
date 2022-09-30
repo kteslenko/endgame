@@ -1,8 +1,7 @@
 #pragma once
 
 #include <SDL2/SDL_mixer.h>
-#include "texture.h"
-#include "geometry.h"
+#include "renderer.h"
 
 typedef struct { 
     int jumps;
@@ -17,5 +16,5 @@ typedef struct {
 t_player *new_player(SDL_Texture *texture);
 void handle_player_event(t_player *player, SDL_Event *e);
 void update_player(t_player *player, float dt);
-void render_player(t_player *player, SDL_Renderer *renderer, SDL_Rect *camera);
+void render_player(t_player *player, t_renderer *renderer);
 void handle_intersect(t_player *player, SDL_FRect *rect);

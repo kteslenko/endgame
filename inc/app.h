@@ -1,9 +1,8 @@
 #pragma once
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
 #include "music.h"
 #include "scenes.h"
+#include "renderer.h"
 
 typedef struct {
     bool quit;
@@ -11,7 +10,7 @@ typedef struct {
     t_scene **scenes;
     t_scene *active_scene;
     SDL_Window *window;
-    SDL_Renderer *renderer;
+    t_renderer *renderer;
 } t_app;
 
 void psdlerror(const char *desc);
