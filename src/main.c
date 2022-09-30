@@ -16,5 +16,9 @@ int main() {
     }
 
     event_loop(app);
+    del_app(app);
     SDL_Quit(); //free memory
+    IMG_Quit();
+    Mix_Quit();
+    TTF_Quit();
 }

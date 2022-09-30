@@ -28,5 +28,4 @@ void play_music(t_mus *m) {
 void del_music(t_mus *mus) {
     Mix_FreeMusic((mus->m_arr));
     (mus->m_arr) = NULL;
-    Mix_Quit();
 }

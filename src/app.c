@@ -38,6 +38,8 @@ t_app *new_app() {
     t_app *app = malloc(sizeof(t_app));
 
     app->quit = false;
+    app->scenes = NULL;
+    app->active_scene = NULL;
     createWindow(&app->window, &app->renderer);
     if (app->window == NULL || app->renderer == NULL) {
         del_app(app);
@@ -50,13 +52,23 @@ t_app *new_app() {
     return app;
 }
 
+static void clean_scenes(t_app *app) {
+    if (app->scenes == NULL) {
+        return;
+    }
+    for (int i = 0; i < 4; i++) {
+        app->scenes[i]->clean(app->scenes[i]);
+    }
+    free(app->scenes);
+}
+
 void del_app(t_app *app) {
     if (app == NULL) {
         return;
     }
+    clean_scenes(app);
     if (app->renderer != NULL) {
-        SDL_DestroyRenderer(app->renderer->renderer);
-        free(app->renderer);
+        clean_renderer(app->renderer);
     }
     if (app->window != NULL) {
         SDL_DestroyWindow(app->window);
@@ -74,6 +86,9 @@ static void handle_event(t_app *app, SDL_Event *e) {
         app->renderer->screen.h = e->window.data2;
     }
     if (e->type == app->event_number + ACTIVE_SCENE_CHANGED) {
+        if (e->user.code == GAME_SCENE) {
+            reset_level((t_game_scene*)app->scenes[GAME_SCENE]);
+        }
         app->active_scene = app->scenes[e->user.code];
     }
     if (app->active_scene != NULL) {

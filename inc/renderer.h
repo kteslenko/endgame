@@ -36,6 +36,7 @@ typedef struct {
     SDL_Texture **textures;
 } t_renderer;
 
+void clean_renderer(t_renderer *renderer);
 void load_textures(t_renderer *renderer);
 void render_clear(t_renderer *renderer);
 void render_present(t_renderer *renderer);

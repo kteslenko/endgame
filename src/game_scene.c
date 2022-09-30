@@ -34,6 +34,9 @@ static void update(t_scene *scene, float dt) {
             SDL_Rect coin = frect_to_rect(&game_scene->map->coins[i].rect);
             if (SDL_HasIntersection(&player, &coin)) {
                 game_scene->score++;
+                if (game_scene->score > 30) {
+                    game_scene->player->max_jumps = 2;
+                }
                 game_scene->map->coins[i].collected = true;
             }
         }
@@ -104,6 +107,24 @@ static void render(t_scene *scene, t_renderer *renderer) {
     render_scene_text(game_scene, renderer);
 }
 
+static void clean_game(struct s_scene *scene) {
+    t_game_scene *game_scene = (t_game_scene*)scene;
+
+    clean_map(game_scene->map);
+    clean_player(game_scene->player);
+    clean_animation(game_scene->coin_animation);
+    TTF_CloseFont(game_scene->font);
+    free(game_scene);
+}
+
+void reset_level(t_game_scene *game_scene) {
+    for (int i = 0; i < game_scene->map->coins_count; i++) {
+        game_scene->map->coins[i].collected = false;
+    }
+    reset_player(game_scene->player);
+    game_scene->score = 0;
+}
+
 t_game_scene *new_game_scene(t_renderer *renderer, uint32_t event_number) {
     t_game_scene *game_scene = malloc(sizeof(t_game_scene));
 
@@ -111,6 +132,7 @@ t_game_scene *new_game_scene(t_renderer *renderer, uint32_t event_number) {
     game_scene->scene.handle_event = handle_event;
     game_scene->scene.update = update;
     game_scene->scene.render = render;
+    game_scene->scene.clean = clean_game;
     game_scene->map = build_level(renderer->textures);
     game_scene->score = 0;
     game_scene->font = TTF_OpenFont("resource/text/PixelMiddle.ttf", 48);

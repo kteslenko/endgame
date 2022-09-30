@@ -1,5 +1,13 @@
 #include "renderer.h"
 
+void clean_renderer(t_renderer *renderer) {
+    SDL_DestroyRenderer(renderer->renderer);
+    for (int i = 0; i < 18; i++) {
+        SDL_DestroyTexture(renderer->textures[i]);
+    }
+    free(renderer);
+}
+
 void load_textures(t_renderer *renderer) {
     renderer->textures = malloc(sizeof(SDL_Texture*) * 18);
 

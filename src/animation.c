@@ -14,6 +14,12 @@ t_animation *new_animation(SDL_Texture *texture, int fps, int count) {
     return animation;
 }
 
+void clean_animation(t_animation *animation) {
+    free(animation->frames);
+    SDL_DestroyTexture(animation->texture);
+    free(animation);
+}
+
 void push_frame(t_animation *animation, SDL_Rect frame) {
     animation->frames[animation->count] = frame;
     animation->count++;

@@ -21,6 +21,7 @@ typedef struct {
 } t_map;
 
 t_map *new_map(int max_blocks, int coins_count);
+void clean_map(t_map *map);
 int count_coins(t_map *map);
 void push_block(t_map *map, t_block block);
 void push_coin(t_map *map, SDL_Rect coin);

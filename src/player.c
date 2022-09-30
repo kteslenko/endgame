@@ -64,6 +64,27 @@ static t_animation **player_animations(t_renderer *renderer) {
     return animations;
 }
 
+void reset_player(t_player *player) {
+    player->jumps = 0;
+    player->max_jumps = 1;
+    player->prev = (SDL_FRect){0, 0, 32, 64};
+    player->rect = (SDL_FRect){0, 0, 32, 64};
+    player->velocity = (SDL_FPoint){0, 0};
+    player->state = IDLE_STATE;
+}
+
+void clean_player(t_player *player) {
+    for (int i = 0; i < 3; i++) {
+        clean_animation(player->animations[i]);
+    }
+    free(player->animations);
+    for (int i = 0; i < 3; i++) {
+        Mix_FreeChunk(player->jumpEffect[i]);
+    }
+    free(player->jumpEffect);
+    free(player);
+}
+
 t_player *new_player(t_renderer *renderer) {
     t_player *player = malloc(sizeof(t_player));
     player->jumpEffect = malloc (sizeof(Mix_Chunk*) * 3);
@@ -71,7 +92,7 @@ t_player *new_player(t_renderer *renderer) {
     player->jumpEffect[1] = Mix_LoadWAV("resource/sounds/jump2.wav");
     player->jumpEffect[2] = Mix_LoadWAV("resource/sounds/jump3.wav");
     player->jumps = 0;
-    player->max_jumps = 2;
+    player->max_jumps = 1;
     player->prev = (SDL_FRect){0, 0, 32, 64};
     player->rect = (SDL_FRect){0, 0, 32, 64};
     player->velocity = (SDL_FPoint){0, 0};

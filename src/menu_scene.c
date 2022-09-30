@@ -59,6 +59,14 @@ static void render(t_scene *scene, t_renderer *renderer) {
     render_text(renderer, "EXIT", menu_scene->font, text_pos, exit_text_color);
 }
 
+static void clean_menu(struct s_scene *scene) {
+    t_menu_scene *menu_scene = (t_menu_scene*)scene;
+
+    TTF_CloseFont(menu_scene->font);
+    TTF_CloseFont(menu_scene->name_font);
+    free(menu_scene);
+}
+
 t_menu_scene *new_menu_scene(t_renderer *renderer, uint32_t event_number, enum e_scene type) {
     t_menu_scene *menu_scene = malloc(sizeof(t_menu_scene));
 
@@ -66,6 +74,7 @@ t_menu_scene *new_menu_scene(t_renderer *renderer, uint32_t event_number, enum e
     menu_scene->scene.handle_event = handle_event;
     menu_scene->scene.update = NULL;
     menu_scene->scene.render = render;
+    menu_scene->scene.clean = clean_menu;
     menu_scene->type = type;
     menu_scene->start_game = (t_block){true, {0, 0, 256, 88}, renderer->textures[BUTTON_PLAY]};
     menu_scene->exit_game = (t_block){true, {0, 0, 256, 88}, renderer->textures[BUTTON_EXIT]};

@@ -20,6 +20,7 @@ typedef struct s_scene {
     void (*handle_event)(struct s_scene *scene, SDL_Event *e);
     void (*update)(struct s_scene *scene, float dt);
     void (*render)(struct s_scene *scene, t_renderer *renderer);
+    void (*clean)(struct s_scene *scene);
 } t_scene;
 
 typedef struct {
@@ -39,10 +40,11 @@ typedef struct {
     t_block start_game;
     t_block exit_game;
 
-    TTF_Font* font;
+    TTF_Font *font;
     TTF_Font *name_font;
     enum e_scene type;
 } t_menu_scene;
 
 t_game_scene *new_game_scene(t_renderer *renderer, uint32_t event_number);
+void reset_level(t_game_scene *game_scene);
 t_menu_scene *new_menu_scene(t_renderer *renderer, uint32_t event_number, enum e_scene type);

@@ -21,6 +21,8 @@ typedef struct {
 } t_player;
 
 t_player *new_player(t_renderer *renderer);
+void reset_player(t_player *player);
+void clean_player(t_player *player);
 void handle_player_event(t_player *player, SDL_Event *e);
 void update_player(t_player *player, float dt);
 void render_player(t_player *player, t_renderer *renderer);
