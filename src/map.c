@@ -82,7 +82,7 @@ t_map *build_level(SDL_Texture **textures) {
 	build_block(map, textures[LOGS], 4154, 515, 92, 51);
 	build_block(map, textures[POOL], 4494, 470, 89, 93);
 	build_platform(map, textures[GROUND], 3704, 564, 20);
-
+	// new levels
 	build_platform(map, textures[GROUND], 5048, 564, 1);
 	build_platform(map, textures[GROUND], 5176, 564, 1);
 	build_platform(map, textures[GROUND], 5368, 564, 1);
@@ -115,6 +115,55 @@ t_map *build_level(SDL_Texture **textures) {
 	build_platform(map, textures[GROUND], 8120, 564, 5);
 	build_platform(map, textures[GROUND], 8568, 500, 5);
 	build_platform(map, textures[GROUND], 8952, 500, 1);
+
+	build_platform(map, textures[GROUND], 7736, 116, 2);
+	build_platform(map, textures[GROUND], 8056, 180, 2);
+	build_platform(map, textures[GROUND], 8568, 180, 1);
+	build_platform(map, textures[GROUND], 8824, 180, 1);	
+	build_platform(map, textures[GROUND], 7736, 564, 1);
+	build_platform(map, textures[GROUND], 7928, 564, 1);
+	build_platform(map, textures[GROUND], 8120, 564, 5);
+	build_platform(map, textures[GROUND], 8568, 500, 5);
+	build_platform(map, textures[GROUND], 8952, 500, 1); //9016 500
+
+	build_platform(map, textures[GROUND], 9016, 500, 20); 
+	build_platform(map, textures[GROUND], 9272, 244, 1);
+	build_platform(map, textures[DIRT], 9336, 308, 5); 
+	build_platform(map, textures[DIRT], 9336, 244, 5); 
+	build_platform(map, textures[DIRT], 9336, 180, 11); 
+	build_platform(map, textures[DIRT], 9336, 116, 11);
+	build_platform(map, textures[DIRT], 9336, 52, 11);
+	build_platform(map, textures[DIRT], 9336, -12, 11);
+	build_platform(map, textures[DIRT], 9720, 308, 5); 
+	build_platform(map, textures[DIRT], 9720, 244, 5); 
+	build_platform(map, textures[DIRT], 10040, -12, 4); 
+	build_platform(map, textures[DIRT], 10040, 52, 4); 
+	build_platform(map, textures[DIRT], 10040, 116, 4); 
+	build_platform(map, textures[DIRT], 10040, 180, 4); 
+	build_platform(map, textures[DIRT], 10040, 308, 4); 
+	build_platform(map, textures[DIRT], 10040, 244, 4); //10360 244
+
+	build_platform(map, textures[GROUND], 10360, 500, 20);
+	build_platform(map, textures[DIRT], 10424, 308, 4);
+	build_platform(map, textures[DIRT], 10424, 244, 4); 
+	build_platform(map, textures[DIRT], 10360, 180, 5); 
+	build_platform(map, textures[DIRT], 10360, 116, 5);
+	build_platform(map, textures[DIRT], 10360, 52, 5);
+	build_platform(map, textures[DIRT], 10360, -12, 5);
+	build_platform(map, textures[DIRT], 10744, 308, 7); 
+	build_platform(map, textures[DIRT], 10744, 244, 7); 
+	build_platform(map, textures[DIRT], 10744, 180, 7); 
+	build_platform(map, textures[DIRT], 10744, 116, 7); 
+	build_platform(map, textures[DIRT], 10744, 52, 7); 
+	build_platform(map, textures[DIRT], 10744, -12, 7); 
+	build_platform(map, textures[DIRT], 11192, -12, 6); 
+	build_platform(map, textures[DIRT], 11192, 52, 6); 
+	build_platform(map, textures[DIRT], 11192, 116, 6); 
+	build_platform(map, textures[DIRT], 11256, 180, 5); 
+	build_platform(map, textures[DIRT], 11256, 244, 5); 
+	build_platform(map, textures[DIRT], 11256, 308, 5); 
+	build_platform(map, textures[GROUND], 11576, 308, 1); 
+
 
     return map;
 }
