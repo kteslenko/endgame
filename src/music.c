@@ -3,6 +3,7 @@
 bool init_music(t_mus *mus) {
     *mus = (t_mus){NULL};
     mus->m_arr = (Mix_Music *)load_music("resource/music/song.mp3");
+    Mix_VolumeMusic(MIX_MAX_VOLUME / 2);
     return true;
 }
 
