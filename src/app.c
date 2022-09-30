@@ -31,7 +31,7 @@ static void create_scenes(t_app *app) {
     app->scenes[MENU_SCENE] = (t_scene*)new_menu_scene(app->renderer, app->event_number, MENU_SCENE);
     app->scenes[LOSING_MENU_SCENE] = (t_scene*)new_menu_scene(app->renderer, app->event_number, LOSING_MENU_SCENE);
     app->scenes[WIN_MENU_SCENE] = (t_scene*)new_menu_scene(app->renderer, app->event_number, WIN_MENU_SCENE);
-    app->active_scene = app->scenes[WIN_MENU_SCENE];
+    app->active_scene = app->scenes[MENU_SCENE];
 }
 
 t_app *new_app() {
