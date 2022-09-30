@@ -22,6 +22,9 @@ enum e_texture {
     IDLE,
     JUMP,
     WALK,
+    BACKGROUND,
+    BUTTON_PLAY,
+    BUTTON_EXIT
 };
 
 typedef struct {
@@ -41,4 +44,5 @@ void render_texturef(t_renderer *renderer, SDL_Texture *texture, SDL_Rect *src, 
 void render_texture(t_renderer *renderer, SDL_Texture *texture, SDL_Rect *src, SDL_Rect *rect);
 void render_texturef_ex(t_renderer *renderer, SDL_Texture *texture, SDL_Rect *src, SDL_FRect *frect, bool flip);
 void render_texture_ex(t_renderer *renderer, SDL_Texture *texture, SDL_Rect *src, SDL_Rect *rect, bool flip);
+SDL_Rect text_rect(t_renderer *renderer, const char *text, TTF_Font *font);
 void render_text(t_renderer *renderer, const char *text, TTF_Font *font, SDL_Point pos, SDL_Color color);

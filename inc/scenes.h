@@ -5,13 +5,16 @@
 
 #include "animation.h"
 #include "player.h"
+#include "events.h"
 #include "map.h"
 
 enum e_scene {
-    GAME_SCENE
+    GAME_SCENE,
+    MENU_SCENE,
 };
 
 typedef struct s_scene {
+    uint32_t event_number;
     void (*handle_event)(struct s_scene *scene, SDL_Event *e);
     void (*update)(struct s_scene *scene, float dt);
     void (*render)(struct s_scene *scene, t_renderer *renderer);
@@ -32,7 +35,13 @@ typedef struct {
 
 typedef struct {
     t_scene scene;
+
+    t_block start_game;
+    t_block exit_game;
+
+    TTF_Font* font;
+    TTF_Font *name_font;
 } t_menu_scene;
 
-t_game_scene *new_game_scene(t_renderer *renderer);
-
+t_game_scene *new_game_scene(t_renderer *renderer, uint32_t event_number);
+t_menu_scene *new_menu_scene(t_renderer *renderer, uint32_t event_number);

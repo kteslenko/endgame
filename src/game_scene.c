@@ -83,9 +83,10 @@ static void render(t_scene *scene, t_renderer *renderer) {
     render_scene_text(game_scene, renderer);
 }
 
-t_game_scene *new_game_scene(t_renderer *renderer) {
+t_game_scene *new_game_scene(t_renderer *renderer, uint32_t event_number) {
     t_game_scene *game_scene = malloc(sizeof(t_game_scene));
 
+    game_scene->scene.event_number = event_number;
     game_scene->scene.handle_event = handle_event;
     game_scene->scene.update = update;
     game_scene->scene.render = render;

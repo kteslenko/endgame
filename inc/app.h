@@ -11,6 +11,7 @@ typedef struct {
     t_scene *active_scene;
     SDL_Window *window;
     t_renderer *renderer;
+    uint32_t event_number;
 } t_app;
 
 void psdlerror(const char *desc);
