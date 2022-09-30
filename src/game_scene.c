@@ -93,9 +93,8 @@ t_game_scene *new_game_scene(t_renderer *renderer) {
     game_scene->map = build_level(renderer->textures);
     game_scene->score = 0;
     game_scene->font = TTF_OpenFont("resource/text/PixelMiddle.ttf", 48);
-    SDL_Texture *player_texture = loadTexture("resource/images/ghost-Sheet.png", renderer->renderer);
     game_scene->coin_animation = coin_animation(renderer);
-    game_scene->player = new_player(player_texture);
+    game_scene->player = new_player(renderer);
     
     for (int i = 0; i < 19; i++) {
         game_scene->coins[i] = malloc(sizeof(t_block));

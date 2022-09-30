@@ -1,7 +1,13 @@
 #pragma once
 
 #include <SDL2/SDL_mixer.h>
-#include "renderer.h"
+#include "animation.h"
+
+enum e_state {
+    IDLE_STATE,
+    JUMP_STATE,
+    WALK_STATE,
+};
 
 typedef struct { 
     int jumps;
@@ -9,11 +15,12 @@ typedef struct {
     SDL_FRect prev;
     SDL_FRect rect;
     SDL_FPoint velocity;
-    SDL_Texture *texture;
+    enum e_state state;
+    t_animation **animations;
     Mix_Chunk **jumpEffect;
 } t_player;
 
-t_player *new_player(SDL_Texture *texture);
+t_player *new_player(t_renderer *renderer);
 void handle_player_event(t_player *player, SDL_Event *e);
 void update_player(t_player *player, float dt);
 void render_player(t_player *player, t_renderer *renderer);

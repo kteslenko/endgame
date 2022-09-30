@@ -12,6 +12,28 @@ void handle_player_event(t_player *player, SDL_Event *e) {
     }
 }
 
+static void update_state(t_player *player) {
+    bool flipped = player->animations[player->state]->flipped;
+
+    if (player->jumps > 0) {
+        player->state = JUMP_STATE;
+    }
+    else if (player->velocity.x != 0) {
+        player->state = WALK_STATE;
+    }
+    else {
+        player->state = IDLE_STATE;
+    }
+
+    player->animations[player->state]->flipped = flipped;
+    if (player->velocity.x < 0) {
+        player->animations[player->state]->flipped = true;
+    }
+    else if (player->velocity.x > 0) {
+        player->animations[player->state]->flipped = false;
+    }
+}
+
 void update_player(t_player *player, float dt) {
     const Uint8 *state = SDL_GetKeyboardState(NULL);
 
@@ -27,9 +49,22 @@ void update_player(t_player *player, float dt) {
     player->rect.x += player->velocity.x * dt;
     player->rect.y += player->velocity.y * dt;
     player->velocity.y += SDL_STANDARD_GRAVITY * 150 * dt;
+
+    update_state(player);
+    update_animation(player->animations[player->state], dt);
 }
 
-t_player *new_player(SDL_Texture *texture) {
+static t_animation **player_animations(t_renderer *renderer) {
+    t_animation **animations = malloc(sizeof(t_animation*) * 3);
+
+    animations[IDLE_STATE] = idle_animation(renderer);
+    animations[JUMP_STATE] = jump_animation(renderer);
+    animations[WALK_STATE] = walk_animation(renderer);
+
+    return animations;
+}
+
+t_player *new_player(t_renderer *renderer) {
     t_player *player = malloc(sizeof(t_player));
     player->jumpEffect = malloc (sizeof(Mix_Chunk*) * 3);
     player->jumpEffect[0] = Mix_LoadWAV("resource/sounds/jump1.wav");
@@ -37,17 +72,27 @@ t_player *new_player(SDL_Texture *texture) {
     player->jumpEffect[2] = Mix_LoadWAV("resource/sounds/jump3.wav");
     player->jumps = 0;
     player->max_jumps = 2;
-    player->prev = (SDL_FRect){0, 64, 64, 64};
-    player->rect = (SDL_FRect){0, 64, 64, 64};
+    player->prev = (SDL_FRect){0, 0, 32, 64};
+    player->rect = (SDL_FRect){0, 0, 32, 64};
     player->velocity = (SDL_FPoint){0, 0};
-    player->texture = texture;
+    player->state = IDLE_STATE;
+    player->animations = player_animations(renderer);
     
     return player;
 }
 
 void render_player(t_player *player, t_renderer *renderer) {
-    SDL_Rect src = {0, 0, 32, 32};
-    render_texturef(renderer, player->texture, &src, &player->rect);
+    t_animation *animation = player->animations[player->state];
+    SDL_Rect frame = animation->frames[animation->current];
+    SDL_FRect rect;
+
+    frame.w *= player->rect.h / frame.h;
+    frame.h = player->rect.h;
+    rect = rect_to_frect(&frame);
+    rect.x = player->rect.x - (rect.w - player->rect.w) / 2;
+    rect.y = player->rect.y;
+    
+    render_animation(animation, renderer, &rect);
 }
 
 void handle_intersect(t_player *player, SDL_FRect *rect) {

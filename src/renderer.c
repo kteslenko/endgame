@@ -1,7 +1,7 @@
 #include "renderer.h"
 
 void load_textures(t_renderer *renderer) {
-    renderer->textures = malloc(sizeof(SDL_Texture*) * 11);
+    renderer->textures = malloc(sizeof(SDL_Texture*) * 14);
 
     renderer->textures[GROUND] = loadTexture("resource/images/ground.png", renderer->renderer);
     renderer->textures[DIRT] = loadTexture("resource/images/dirt.png", renderer->renderer);
@@ -14,6 +14,9 @@ void load_textures(t_renderer *renderer) {
     renderer->textures[LOGS] = loadTexture("resource/images/logs.png", renderer->renderer);
     renderer->textures[POOL] = loadTexture("resource/images/pool.png", renderer->renderer);
     renderer->textures[COIN] = loadTexture("resource/images/coin2_20x20.png", renderer->renderer);
+    renderer->textures[IDLE] = loadTexture("resource/images/Idle.png", renderer->renderer);
+    renderer->textures[JUMP] = loadTexture("resource/images/Jump.png", renderer->renderer);
+    renderer->textures[WALK] = loadTexture("resource/images/Walk.png", renderer->renderer);
 }
 
 void render_clear(t_renderer *renderer) {
@@ -33,15 +36,23 @@ void mode_camera(t_renderer *renderer) {
 }
 
 void render_texturef(t_renderer *renderer, SDL_Texture *texture, SDL_Rect *src, SDL_FRect *frect) {
-    SDL_Rect rect = frect_to_rect(frect);
-    render_texture(renderer, texture, src, &rect);
+    render_texturef_ex(renderer, texture, src, frect, false);
 }
 
 void render_texture(t_renderer *renderer, SDL_Texture *texture, SDL_Rect *src, SDL_Rect *rect) {
+    render_texture_ex(renderer, texture, src, rect, false);
+}
+
+void render_texturef_ex(t_renderer *renderer, SDL_Texture *texture, SDL_Rect *src, SDL_FRect *frect, bool flip) {
+    SDL_Rect rect = frect_to_rect(frect);
+    render_texture_ex(renderer, texture, src, &rect, flip);
+}
+
+void render_texture_ex(t_renderer *renderer, SDL_Texture *texture, SDL_Rect *src, SDL_Rect *rect, bool flip) {
     SDL_Rect dst = *rect;
     dst.x -= renderer->active->x;
     dst.y -= renderer->active->y;
-    SDL_RenderCopy(renderer->renderer, texture, src, &dst);
+    SDL_RenderCopyEx(renderer->renderer, texture, src, &dst, 0, NULL, SDL_FLIP_HORIZONTAL * flip);
 }
 
 void render_text(t_renderer *renderer, const char *text, TTF_Font *font, SDL_Point pos, SDL_Color color) {
