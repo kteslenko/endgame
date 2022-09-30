@@ -34,6 +34,7 @@ static void update(t_scene *scene, float dt) {
             SDL_Rect coin = frect_to_rect(&game_scene->map->coins[i].rect);
             if (SDL_HasIntersection(&player, &coin)) {
                 game_scene->score++;
+                Mix_PlayChannel(-1, game_scene->coinEffect[rand() % 3], 0);
                 if (game_scene->score > 30) {
                     game_scene->player->max_jumps = 2;
                 }
@@ -114,6 +115,9 @@ static void clean_game(struct s_scene *scene) {
     clean_player(game_scene->player);
     clean_animation(game_scene->coin_animation);
     TTF_CloseFont(game_scene->font);
+    for (int i = 0; i < 3; i++) {
+        Mix_FreeChunk(game_scene->coinEffect[i]);
+    }
     free(game_scene);
 }
 
@@ -138,6 +142,11 @@ t_game_scene *new_game_scene(t_renderer *renderer, uint32_t event_number) {
     game_scene->font = TTF_OpenFont("resource/text/PixelMiddle.ttf", 48);
     game_scene->coin_animation = coin_animation(renderer);
     game_scene->player = new_player(renderer);
+
+    game_scene->coinEffect = malloc (sizeof(Mix_Chunk*) * 3);
+    game_scene->coinEffect[0] = Mix_LoadWAV("resource/sounds/coin1.wav");
+    game_scene->coinEffect[1] = Mix_LoadWAV("resource/sounds/coin2.wav");
+    game_scene->coinEffect[2] = Mix_LoadWAV("resource/sounds/coin3.wav");
 
     return game_scene;
 }

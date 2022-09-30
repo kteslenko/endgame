@@ -32,6 +32,7 @@ typedef struct {
     int score;
 
     TTF_Font* font;
+    Mix_Chunk **coinEffect;
 } t_game_scene;
 
 typedef struct {
