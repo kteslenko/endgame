@@ -26,10 +26,12 @@ static void createWindow(SDL_Window **window, t_renderer **renderer) { //functio
 
 static void create_scenes(t_app *app) {
     app->event_number = SDL_RegisterEvents(2);
-    app->scenes = malloc(sizeof(t_scene*) * 2);
+    app->scenes = malloc(sizeof(t_scene*) * 4);
     app->scenes[GAME_SCENE] = (t_scene*)new_game_scene(app->renderer, app->event_number);
-    app->scenes[MENU_SCENE] = (t_scene*)new_menu_scene(app->renderer, app->event_number);
-    app->active_scene = app->scenes[MENU_SCENE];
+    app->scenes[MENU_SCENE] = (t_scene*)new_menu_scene(app->renderer, app->event_number, MENU_SCENE);
+    app->scenes[LOSING_MENU_SCENE] = (t_scene*)new_menu_scene(app->renderer, app->event_number, LOSING_MENU_SCENE);
+    app->scenes[WIN_MENU_SCENE] = (t_scene*)new_menu_scene(app->renderer, app->event_number, WIN_MENU_SCENE);
+    app->active_scene = app->scenes[WIN_MENU_SCENE];
 }
 
 t_app *new_app() {
