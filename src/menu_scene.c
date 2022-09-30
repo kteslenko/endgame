@@ -24,10 +24,6 @@ static void handle_event(t_scene *scene, SDL_Event *e) {
     }
 }
 
-static void update(t_scene *scene, float dt) {
-     t_menu_scene *menu_scene = (t_menu_scene*)scene;
-}
-
 static void render(t_scene *scene, t_renderer *renderer) {
     SDL_Point center = {renderer->screen.w / 2, renderer->screen.h / 2};
     t_menu_scene *menu_scene = (t_menu_scene*)scene;
@@ -62,7 +58,7 @@ t_menu_scene *new_menu_scene(t_renderer *renderer, uint32_t event_number) {
 
     menu_scene->scene.event_number = event_number;
     menu_scene->scene.handle_event = handle_event;
-    menu_scene->scene.update = update;
+    menu_scene->scene.update = NULL;
     menu_scene->scene.render = render;
     menu_scene->start_game = (t_block){true, {0, 0, 256, 88}, renderer->textures[BUTTON_PLAY]};
     menu_scene->exit_game = (t_block){true, {0, 0, 256, 88}, renderer->textures[BUTTON_EXIT]};

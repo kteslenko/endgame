@@ -80,7 +80,7 @@ static void handle_event(t_app *app, SDL_Event *e) {
 }
 
 static void update(t_app *app, float dt) {
-    if (app->active_scene != NULL) {
+    if (app->active_scene != NULL && app->active_scene->update != NULL) {
         app->active_scene->update(app->active_scene, dt);
     }
 }
