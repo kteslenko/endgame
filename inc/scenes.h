@@ -11,6 +11,8 @@
 enum e_scene {
     GAME_SCENE,
     MENU_SCENE,
+    LOSING_MENU_SCENE,
+    WIN_MENU_SCENE
 };
 
 typedef struct s_scene {
@@ -41,7 +43,8 @@ typedef struct {
 
     TTF_Font* font;
     TTF_Font *name_font;
+    enum e_scene type;
 } t_menu_scene;
 
 t_game_scene *new_game_scene(t_renderer *renderer, uint32_t event_number);
-t_menu_scene *new_menu_scene(t_renderer *renderer, uint32_t event_number);
+t_menu_scene *new_menu_scene(t_renderer *renderer, uint32_t event_number, enum e_scene type);
