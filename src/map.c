@@ -163,6 +163,15 @@ t_map *build_level(SDL_Texture **textures) {
 	build_platform(map, textures[DIRT], 11256, 180, 5); 
 	build_platform(map, textures[DIRT], 11256, 244, 5); 
 	build_platform(map, textures[DIRT], 11256, 308, 5); 
+
+	build_platform(map, textures[GROUND], 11704, 500, 3); 
+	build_platform(map, textures[GROUND], 11896, 436, 3); 
+	build_platform(map, textures[GROUND], 12088, 372, 3); 
+	build_platform(map, textures[GROUND], 12280, 308, 2);
+	build_platform(map, textures[GROUND], 12408, 244, 3); 
+	build_block(map, textures[FIRE], 12536, 220, 64, 30);
+	build_block(map, textures[ROCK], 11896, 410, 46, 29);
+	build_block(map, textures[ROCK], 12204, 345, 46, 29);
 	
 
 
