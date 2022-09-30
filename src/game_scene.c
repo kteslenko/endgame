@@ -9,11 +9,11 @@ static void update(t_scene *scene, float dt) {
     t_game_scene *game_scene = (t_game_scene*)scene;
 
     update_player(game_scene->player, dt);
-    for (int i = 0; i < 15; i++) {
+    for (int i = 0; i < game_scene->map->size; i++) {
     	SDL_Rect player = frect_to_rect(&game_scene->player->rect);
-    	SDL_Rect block = frect_to_rect(&game_scene->blocks[i].rect);
+    	SDL_Rect block = frect_to_rect(&game_scene->map->blocks[i].rect);
         if (SDL_HasIntersection(&player, &block)) {
-            handle_intersect(game_scene->player, &game_scene->blocks[i].rect);
+            handle_intersect(game_scene->player, &game_scene->map->blocks[i].rect);
         }
     }
     for (int i = 0; i < 19; i++) {
@@ -65,12 +65,12 @@ static void render(t_scene *scene, t_renderer *renderer) {
     render_sky(game_scene, renderer);
 
     mode_camera(renderer);
-    for (int i = 0; i < 15; i++) {
-        render_texturef(renderer,  game_scene->blocks[i].texture, NULL, &game_scene->blocks[i].rect);
+    for (int i = 0; i < game_scene->map->size; i++) {
+        render_texturef(renderer, game_scene->map->blocks[i].texture, NULL, &game_scene->map->blocks[i].rect);
     }
     for (int i = 0; i < 19; i++) {
         if (game_scene->coins[i] != NULL) {
-            render_texturef(renderer,  game_scene->coins[i]->texture, NULL, &game_scene->coins[i]->rect);
+            render_texturef(renderer, game_scene->coins[i]->texture, NULL, &game_scene->coins[i]->rect);
         }
     }
     render_player(game_scene->player, renderer);
@@ -86,30 +86,13 @@ t_game_scene *new_game_scene(t_renderer *renderer) {
     game_scene->scene.update = update;
     game_scene->scene.render = render;
     game_scene->sky = loadTexture("resource/images/sky.png", renderer->renderer);
-    game_scene->blocks = malloc(sizeof(t_block) * 15);
+    game_scene->map = build_level(renderer->textures);
     game_scene->score = 0;
     game_scene->font = TTF_OpenFont("resource/text/PixelMiddle.ttf", 48);
     SDL_Texture *coin_texture = loadTexture("resource/images/coin.png", renderer->renderer);
     SDL_Texture *player_texture = loadTexture("resource/images/ghost-Sheet.png", renderer->renderer);
-    SDL_Texture *ground_texture = loadTexture("resource/images/ground.png", renderer->renderer);
     
     game_scene->player = new_player(player_texture);
-
-    for (int i = 0; i < 10; i++) {
-        game_scene->blocks[i].texture = ground_texture;
-        game_scene->blocks[i].rect.x = i * 64.0f;
-        game_scene->blocks[i].rect.y = 656.0f;
-        game_scene->blocks[i].rect.w = 64.0f;
-        game_scene->blocks[i].rect.h = 64.0f;
-    }
-
-    for (int i = 10; i < 15; i++) {
-        game_scene->blocks[i].texture = ground_texture;
-        game_scene->blocks[i].rect.x = (i - 5) * 64.0f;
-        game_scene->blocks[i].rect.y = 292.0f;
-        game_scene->blocks[i].rect.w = 64.0f;
-        game_scene->blocks[i].rect.h = 64.0f;
-    }
     
     for (int i = 0; i < 19; i++) {
         game_scene->coins[i] = malloc(sizeof(t_block));

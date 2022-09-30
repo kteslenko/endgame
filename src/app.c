@@ -39,6 +39,7 @@ t_app *new_app() {
         del_app(app);
         app = NULL;
     }
+    load_textures(app->renderer);
     create_scenes(app);
     init_music(&app->mus);
 

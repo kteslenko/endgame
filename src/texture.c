@@ -25,10 +25,3 @@ void render_func(SDL_Renderer *renderer, SDL_Texture *texture, float x, float y,
 
     SDL_RenderCopy(renderer, texture, &src, &dst);
 }
-
-void build_platform(SDL_Renderer *renderer, SDL_Texture *texture, float x, float y, int len) {
-    for (int i = 1; i <= len; i++) {
-            render_func(renderer, texture, x, y, 64, 64);
-            x += 64;
-    }
-}

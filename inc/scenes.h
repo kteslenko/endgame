@@ -4,7 +4,7 @@
 #include <SDL2/SDL_ttf.h>
 
 #include "player.h"
-#include "texture.h"
+#include "map.h"
 
 enum e_scene {
     GAME_SCENE
@@ -17,13 +17,8 @@ typedef struct s_scene {
 } t_scene;
 
 typedef struct {
-    SDL_FRect rect;
-    SDL_Texture *texture;
-} t_block;
-
-typedef struct {
     t_scene scene;
-    t_block *blocks;
+    t_map *map;
     t_player *player;
 
     t_block *coins[19];

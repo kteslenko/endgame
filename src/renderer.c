@@ -1,5 +1,20 @@
 #include "renderer.h"
 
+void load_textures(t_renderer *renderer) {
+    renderer->textures = malloc(sizeof(SDL_Texture*) * 10);
+
+    renderer->textures[GROUND] = loadTexture("resource/images/ground.png", renderer->renderer);
+    renderer->textures[DIRT] = loadTexture("resource/images/dirt.png", renderer->renderer);
+    renderer->textures[FIRE] = loadTexture("resource/images/fire.png", renderer->renderer);
+    renderer->textures[BUSH] = loadTexture("resource/images/bush1.png", renderer->renderer);
+    renderer->textures[TREE1] = loadTexture("resource/images/tree1.png", renderer->renderer);
+    renderer->textures[TREE2] = loadTexture("resource/images/tree2.png", renderer->renderer);
+    renderer->textures[ROCK] = loadTexture("resource/images/rock1.png", renderer->renderer);
+    renderer->textures[BENCH] = loadTexture("resource/images/bench.png", renderer->renderer);
+    renderer->textures[LOGS] = loadTexture("resource/images/logs.png", renderer->renderer);
+    renderer->textures[POOL] = loadTexture("resource/images/pool.png", renderer->renderer);
+}
+
 void render_clear(t_renderer *renderer) {
     SDL_RenderClear(renderer->renderer);
 }
