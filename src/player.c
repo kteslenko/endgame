@@ -4,7 +4,7 @@ void handle_player_event(t_player *player, SDL_Event *e) {
     if (e->type == SDL_KEYDOWN) {
         if (e->key.keysym.sym == SDLK_UP && e->key.repeat == 0) {
             if (player->jumps < player->max_jumps) {
-                player->velocity.y = -750;
+                player->velocity.y = -650;
                 player->jumps++;
                 Mix_PlayChannel(-1, player->jumpEffect[rand() % 3], 0);
             }

@@ -37,7 +37,7 @@ static void render(t_scene *scene, t_renderer *renderer) {
     mode_screen(renderer);
     render_texture(renderer, renderer->textures[BACKGROUND], NULL, &renderer->screen);
 
-    SDL_Rect text_size = text_rect(renderer, "Medieval Cringe", menu_scene->name_font);
+    SDL_Rect text_size = text_rect(renderer, central_text[menu_scene->type], menu_scene->name_font);
 
     text_pos = (SDL_Point){center.x - text_size.w / 2, center.y - text_size.h / 2 - 100}; 
     render_text(renderer, central_text[menu_scene->type], menu_scene->name_font, text_pos, name_text_color);

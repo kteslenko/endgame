@@ -61,11 +61,29 @@ static void move_camera(t_game_scene *scene, t_renderer *renderer) {
     renderer->camera.h = renderer->screen.h;
     renderer->camera.x = roundf(scene->player->rect.x + scene->player->rect.w / 2) - renderer->camera.w / 2;
     renderer->camera.y = roundf(scene->player->rect.y + scene->player->rect.h / 2) - renderer->camera.h / 2;
+    if (renderer->camera.y > 2000) {
+        renderer->camera.y = 2000;
+    }
+}
+
+static void push_switch_event(t_scene *scene, enum e_scene type) {
+    SDL_Event event;
+
+    SDL_zero(event);
+    event.type = scene->event_number + ACTIVE_SCENE_CHANGED;
+    event.user.code = type;
+    SDL_PushEvent(&event);
 }
 
 static void render(t_scene *scene, t_renderer *renderer) {
     t_game_scene *game_scene = (t_game_scene*)scene;
+    SDL_Rect player = frect_to_rect(&game_scene->player->rect);
+
     move_camera(game_scene, renderer);
+    if (!SDL_HasIntersection(&player, &renderer->camera)) {
+        push_switch_event(scene, LOSING_MENU_SCENE);
+    }
+
     render_sky(game_scene, renderer);
 
     mode_camera(renderer);
