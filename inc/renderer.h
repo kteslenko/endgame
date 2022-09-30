@@ -19,6 +19,9 @@ enum e_texture {
     LOGS,
     POOL,
     COIN,
+    BACKGROUND,
+    BUTTON_PLAY,
+    BUTTON_EXIT
 };
 
 typedef struct {
@@ -36,4 +39,5 @@ void mode_screen(t_renderer *renderer);
 void mode_camera(t_renderer *renderer);
 void render_texturef(t_renderer *renderer, SDL_Texture *texture, SDL_Rect *src, SDL_FRect *frect);
 void render_texture(t_renderer *renderer, SDL_Texture *texture, SDL_Rect *src, SDL_Rect *rect);
+SDL_Rect text_rect(t_renderer *renderer, const char *text, TTF_Font *font);
 void render_text(t_renderer *renderer, const char *text, TTF_Font *font, SDL_Point pos, SDL_Color color);

@@ -1,7 +1,7 @@
 #include "renderer.h"
 
 void load_textures(t_renderer *renderer) {
-    renderer->textures = malloc(sizeof(SDL_Texture*) * 11);
+    renderer->textures = malloc(sizeof(SDL_Texture*) * 14);
 
     renderer->textures[GROUND] = loadTexture("resource/images/ground.png", renderer->renderer);
     renderer->textures[DIRT] = loadTexture("resource/images/dirt.png", renderer->renderer);
@@ -14,6 +14,9 @@ void load_textures(t_renderer *renderer) {
     renderer->textures[LOGS] = loadTexture("resource/images/logs.png", renderer->renderer);
     renderer->textures[POOL] = loadTexture("resource/images/pool.png", renderer->renderer);
     renderer->textures[COIN] = loadTexture("resource/images/coin2_20x20.png", renderer->renderer);
+    renderer->textures[BACKGROUND] = loadTexture("resource/images/background.png", renderer->renderer);
+    renderer->textures[BUTTON_PLAY] = loadTexture("resource/images/button_play.png", renderer->renderer);
+    renderer->textures[BUTTON_EXIT] = loadTexture("resource/images/button_exit.png", renderer->renderer);
 }
 
 void render_clear(t_renderer *renderer) {
@@ -42,6 +45,17 @@ void render_texture(t_renderer *renderer, SDL_Texture *texture, SDL_Rect *src, S
     dst.x -= renderer->active->x;
     dst.y -= renderer->active->y;
     SDL_RenderCopy(renderer->renderer, texture, src, &dst);
+}
+
+SDL_Rect text_rect(t_renderer *renderer, const char *text, TTF_Font *font) {
+    SDL_Surface* surface_text = TTF_RenderText_Solid(font, text, (SDL_Color){0, 0, 0, 0});
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer->renderer, surface_text);
+    SDL_Rect text_rect = {0, 0, 0, 0};
+
+    SDL_QueryTexture(texture, NULL, NULL, &text_rect.w, &text_rect.h);
+    SDL_FreeSurface(surface_text);
+    SDL_DestroyTexture(texture);
+    return text_rect;
 }
 
 void render_text(t_renderer *renderer, const char *text, TTF_Font *font, SDL_Point pos, SDL_Color color) {
